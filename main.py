@@ -22,7 +22,7 @@ class MyWindow(QMainWindow):
         # Konstruktor von QMainWindow aufrufen, Objekt wird erzeugt
         super().__init__()
         self.setMinimumSize(QSize(550, 250))    #Membervariablen dieser Funktion --> self ist wie this
-        self.setWindowTitle('Bit 2 Decimal Calculator') 
+        self.setWindowTitle('Bit 2 Decimal Calculator Freissmuth') 
         
         wid = QWidget(self)
         self.setCentralWidget(wid)
@@ -40,28 +40,32 @@ class MyWindow(QMainWindow):
         #stylesheet notwendig?
         self.slider.setTickInterval(1) # Slider soll in 1er Schritten bewegt werden
         self.slider.setTickPosition(2)
-        self.slider.bin2dec[int].connect(self.bin2dec)
+        self.slider.valueChanged[int].connect(self.bin2dec)
         
         self.label = QLabel('0')
         sliderbox = QHBoxLayout()
         sliderbox.addWidget(self.slider)
         sliderbox.addWidget(self.label)
+        vlayout.addLayout(sliderbox)
 
-        # Labels fuer 4 Bits
-        self.bitlabels = [QLabel("1"),QLabel("2"),QLabel("4"),QLabel("8")] # Liste hier bitlabels erstellen      
+        self.bitlabels = [QLabel("1"),QLabel("2"),QLabel("4"),QLabel("8")] # Liste hier bitlabels erstellen 
+        
         bitbox = QHBoxLayout()
+        vbox = QVBoxLayout()
+        vbox.setAlignment(Qt.AlignCenter)
+        vbox.addLayout(bitbox)
+        vlayout.addLayout(vbox)
+        
+        # Labels fuer 4 Bits     
         for index, bitlabel in enumerate(self.bitlabels): #geht es ohne enumerate?
             bitbox.addWidget(bitlabel)
-            # rgb(255,0,0) = rot, rgb(200,200,200) = grau
-            bitlabel.setStylesheet("background-color: rgb(200,200,200)") #grau beim start
-            bitlabel.setAlignment("center") #zentrieren
+            # rgb(255,0,0) = rot, rgb(200,200,200) = grau     
+            bitlabel.setStyleSheet("background-color: rgb(200,200,200)") #grau beim start
+            bitlabel.setAlignment(Qt.AlignCenter) #zentrieren
             bitlabel.setFixedWidth(30) # breite 30
             bitlabel.setFixedHeight(30) #höhe 30
 
-        # Layout zusammenbauen
-        vbox = QVBoxLayout()
-        vbox.addLayout(sliderbox)
-        vbox.addLayout(bitbox)
+        
         
         # Umrechnungstabelle
         #         zahl      [0]:1    [1]:2   [2]:4   [3]:8
