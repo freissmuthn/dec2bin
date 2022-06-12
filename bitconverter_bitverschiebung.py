@@ -64,12 +64,12 @@ class MyWindow(QMainWindow):
             bitlabel.setFixedHeight(30)
             
         self.length=len(self.bitlabels)    
-    def valueChanged(self, value):  
+    def bin2dec(self, value):  
         cvalue= str(value)
         self.label.setText(str(cvalue))
-        for j in range(self.length):
+        for j, led in enumerate(leds):
             i=self.length-j-1
-            if (cvalue & 1<<j):
+            if (value & 1<<j):
                 self.bitlabels[i].setStyleSheet("background-color: rgb(255, 0, 0)")
                 led.on()
             else:
